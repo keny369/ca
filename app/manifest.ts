@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
-import { siteDescription, siteName } from "./site-config";
+import { assetPath, siteDescription, siteName } from "./site-config";
+
+export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${siteName} — Handcrafted Chocolate Gifts Melbourne`,
     short_name: siteName,
     description: siteDescription,
-    start_url: "/",
+    start_url: `${assetPath("/")}`,
     display: "standalone",
     background_color: "#fbf8f2",
     theme_color: "#291914",
@@ -14,7 +16,7 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["food", "shopping", "lifestyle"],
     icons: [
       {
-        src: "/images/logo-reference.jpeg",
+        src: assetPath("/images/logo-reference.jpeg"),
         sizes: "any",
         type: "image/jpeg",
       },

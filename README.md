@@ -1,6 +1,6 @@
 # Cocoa Atelier
 
-[See the live Cocoa Atelier concept](https://cocoa-atelier-melbourne.workspace-324323.chatgpt.site)
+[See the live Cocoa Atelier concept](https://keny369.github.io/ca/)
 
 This project has a personal reason behind it. Mario is my brother-in-law and Elena is his wife. Elena has wanted to build Cocoa Atelier for some time: a Melbourne atelier creating chocolate strawberry bouquets, sculptural edible gifts and beautiful pieces for celebrations, events and corporate gifting.
 
@@ -57,7 +57,7 @@ npm run lint
 npm test
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` at build time when the permanent Cocoa Atelier domain is ready. Until then, metadata uses the current public concept URL.
+The site is exported as static HTML, CSS and JavaScript and published automatically to GitHub Pages whenever the `main` branch changes. When a permanent Cocoa Atelier domain is ready, the canonical URL and GitHub Pages custom-domain setting can be updated together.
 
 ## Ownership
 

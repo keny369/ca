@@ -34,10 +34,10 @@ yarn-error.log*
 # vercel
 .vercel
 
-/dist/
-/.wrangler/
 /outputs/
 /work/
+/dist/
+/.wrangler/
 
 # Private/local source material (kept in the workspace, never published)
 /research/source-emails/

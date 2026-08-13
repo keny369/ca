@@ -95,7 +95,7 @@ const faqs = [
 ] as const;
 
 function absoluteUrl(path: string) {
-  return new URL(path, `${siteUrl}/`).toString();
+  return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 const productNodes = products.map((product, index) => {

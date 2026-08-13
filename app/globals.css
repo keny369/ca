@@ -187,7 +187,7 @@ img { display: block; width: 100%; }
   text-transform: uppercase;
 }
 .hero-image {
-  background-image: linear-gradient(90deg, rgba(41,25,20,.25), transparent 35%), url("/images/hero-atelier-bouquets.png");
+  background-image: linear-gradient(90deg, rgba(41,25,20,.25), transparent 35%), url("/ca/images/hero-atelier-bouquets.png");
   background-size: cover;
   background-position: center;
   min-height: 650px;
@@ -363,7 +363,7 @@ img { display: block; width: 100%; }
 .delivery-card a { display: inline-flex; gap: 25px; margin-top: 22px; padding-bottom: 4px; border-bottom: 1px solid; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
 
 .events { min-height: 760px; display: grid; grid-template-columns: 56% 44%; background: var(--cocoa); color: var(--ivory); }
-.events-image { background: linear-gradient(90deg, transparent 65%, rgba(41,25,20,.25)), url("/images/hero-atelier-bouquets.png") center / cover; }
+.events-image { background: linear-gradient(90deg, transparent 65%, rgba(41,25,20,.25)), url("/ca/images/hero-atelier-bouquets.png") center / cover; }
 .events-copy { padding: 8vw 6.5vw; display: flex; flex-direction: column; justify-content: center; }
 .events-copy > p:not(.eyebrow) { margin: 30px 0 0; color: rgba(247,242,232,.72); font-size: 14px; line-height: 1.8; }
 .events-list { margin: 38px 0; padding: 20px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; border-top: 1px solid rgba(247,242,232,.18); border-bottom: 1px solid rgba(247,242,232,.18); }

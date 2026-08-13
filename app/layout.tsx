@@ -46,12 +46,12 @@ export const metadata: Metadata = {
     "Cocoa Atelier",
   ],
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
     languages: {
-      "en-AU": "/",
+      "en-AU": siteUrl,
     },
   },
-  manifest: "/manifest.webmanifest",
+  manifest: `${siteUrl}/manifest.webmanifest`,
   formatDetection: {
     email: false,
     address: false,
@@ -73,13 +73,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Cocoa Atelier | A gift, composed to be remembered",
     description: siteDescription,
-    url: "/",
+    url: siteUrl,
     siteName,
     type: "website",
     locale: "en_AU",
     images: [
       {
-        url: "/og.png",
+        url: `${siteUrl}/og.png`,
         width: 1792,
         height: 936,
         alt: "Cocoa Atelier chocolate strawberry bouquets with the words A gift, composed to be remembered",
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Cocoa Atelier | A gift, composed to be remembered",
     description: siteDescription,
-    images: ["/og.png"],
+    images: [`${siteUrl}/og.png`],
   },
   other: {
     "geo.region": "AU-VIC",

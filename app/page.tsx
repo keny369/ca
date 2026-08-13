@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
+import { assetPath } from "./site-config";
 
 type Product = {
   name: string;
@@ -291,7 +292,7 @@ export default function Home() {
               >
                 {product.badge && <span className="product-badge">{product.badge}</span>}
                 <Image
-                  src={product.image}
+                  src={assetPath(product.image)}
                   alt={product.alt}
                   fill
                   sizes="(max-width: 560px) 86vw, (max-width: 820px) 43vw, (max-width: 1120px) 29vw, 22vw"
@@ -315,7 +316,7 @@ export default function Home() {
       <section className="bespoke section" id="bespoke">
         <div className="bespoke-image">
           <Image
-            src="/images/atelier-editorial.png"
+            src={assetPath("/images/atelier-editorial.png")}
             alt="A white Cocoa Atelier presentation piece in a clear keepsake box"
             fill
             sizes="(max-width: 820px) 86vw, 46vw"
@@ -392,7 +393,7 @@ export default function Home() {
         </div>
         <div className="atelier-still-life">
           <Image
-            src="/images/atelier-gift-box.png"
+            src={assetPath("/images/atelier-gift-box.png")}
             alt="Chocolate rose strawberries in a wooden gift box"
             fill
             sizes="(max-width: 820px) 86vw, 52vw"
@@ -463,7 +464,7 @@ export default function Home() {
             <div className="modal-image">
               <Image
                 key={modalImage}
-                src={modalImage ?? selectedProduct.image}
+                src={assetPath(modalImage ?? selectedProduct.image)}
                 alt={`${selectedProduct.alt}, ${selectedPalette.toLowerCase()} palette preview`}
                 fill
                 sizes="(max-width: 820px) 100vw, 420px"

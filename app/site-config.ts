@@ -1,6 +1,10 @@
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://cocoa-atelier-melbourne.workspace-324323.chatgpt.site";
+export const basePath = "/ca";
+
+export const siteUrl = "https://keny369.github.io/ca";
+
+export function assetPath(path: string) {
+  return `${basePath}${path.startsWith("/") ? path : `/${path}`}`;
+}
 
 export const siteName = "Cocoa Atelier";
 
