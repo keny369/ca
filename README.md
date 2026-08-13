@@ -1,22 +1,64 @@
 # Cocoa Atelier
 
-A researched website concept for Cocoa Atelier, a Melbourne maker of chocolate strawberry bouquets, sculptural gifts, event pieces, and corporate gifting.
+[See the live Cocoa Atelier concept](https://cocoa-atelier-melbourne.workspace-324323.chatgpt.site)
 
-## Workspace map
+This project has a personal reason behind it. Mario is my brother-in-law and Elena is his wife. Elena has wanted to build Cocoa Atelier for some time: a Melbourne atelier creating chocolate strawberry bouquets, sculptural edible gifts and beautiful pieces for celebrations, events and corporate gifting.
 
-- `app/` — responsive website source.
-- `public/images/` — curated website-ready source images and palette previews.
-- `research/market-and-site-strategy.md` — market findings, positioning, offer architecture, recommended site map, payments, pop-up economics, launch plan, and compliance checklist.
-- `research/content-inventory.md` — provenance and editorial notes for the supplied content.
-- `research/source-emails/` — untouched originals; local-only and excluded from publishing.
-- `research/email-text/` — extracted readable email copy; local-only.
-- `research/raw-images/` — every extracted attachment; local-only.
-- `research/contact-sheets/` — internal visual indexes; local-only.
+I offered to build the first website as a gift to them. This repository is where I’m shaping that idea with Mario and Elena, testing the positioning and refining the collection until it is ready to become a real business.
 
-## Current state
+The direction is intentionally European, sophisticated and luxurious, but still warm and accessible. The website should feel considered rather than corporate, with Elena’s products and presentation doing most of the talking.
 
-The site is a clearly labelled concept and does not take live payments. Product order buttons open a pre-filled email request. The Prestige Collection includes live Cocoa & ivory, Rose & blush, and Red romance photo previews. Stripe Payment Links are the recommended first payment integration once business, delivery, product, and allergen details are confirmed.
+— Lee Powell
 
-## Brand assumption
+## What is here
 
-The working name is **Cocoa Atelier**, because Elena's emails, supplied logo, email address, and copy consistently use that spelling. This should be confirmed before public launch because the initial brief also referred to **Coco Atelier**.
+- A responsive Cocoa Atelier concept website.
+- Eight founding-collection pieces with interactive colour-palette previews.
+- Enquiry-led ordering for collection, bespoke, event and corporate requests.
+- Melbourne delivery and Click & Collect messaging.
+- Search, answer-engine and geographic metadata grounded in the business facts we currently know.
+- Market research, positioning and launch recommendations in `research/market-and-site-strategy.md`.
+
+The original emails, extracted attachments and internal contact sheets remain local and are deliberately excluded from this public repository.
+
+## Current status
+
+This is a public concept site, not a live online store. It does not yet take payments. Product selections open a prepared email so Elena can confirm availability, delivery and secure payment personally.
+
+Before commercial launch, the final business name, domain, delivery zones, lead times, ingredients, allergens, refund terms, privacy wording and payment process need to be confirmed by Mario and Elena.
+
+## Discoverability foundations
+
+The site includes:
+
+- a self-referencing canonical URL and Australian English locale;
+- Melbourne, Victoria and Australia geographic signals;
+- crawl and index directives, `robots.txt` and an XML sitemap;
+- Open Graph and X social-card metadata;
+- a web manifest;
+- Schema.org JSON-LD for the business, website, collection, products and visible FAQs;
+- descriptive headings, product copy, image alt text and answer-focused FAQ content.
+
+No address, telephone number, opening hours, ratings, reviews or verification codes have been invented. Those can be added when the business confirms them. Metadata helps engines understand the site; it cannot guarantee rankings, citations or rich-result treatment.
+
+## Local development
+
+Requirements: Node.js 22.13 or newer.
+
+```bash
+npm install
+npm run dev
+```
+
+Useful checks:
+
+```bash
+npm run lint
+npm test
+```
+
+Set `NEXT_PUBLIC_SITE_URL` at build time when the permanent Cocoa Atelier domain is ready. Until then, metadata uses the current public concept URL.
+
+## Ownership
+
+Cocoa Atelier’s name, branding, copy and supplied product imagery are reserved for Cocoa Atelier. They are published here to develop this business and are not offered for reuse.
