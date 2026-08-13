@@ -36,4 +36,4 @@ The prototype displays selected source files inside consistent CSS crop frames, 
 
 Images containing apparent third-party luxury branding were excluded. Tiny attachments matching Mario's work-email signature graphics are retained only in the raw archive and are not used.
 
-The two Prestige palette previews were created non-destructively with the built-in ImageGen editing workflow. The edit prompts changed only the strawberry coating colours while requiring the cylinder, ribbon, text, lighting, composition, and product count to remain fixed.
+Palette previews for all eight launch products were created non-destructively with the built-in ImageGen editing workflow. The edit prompts changed the chocolate coatings and only the decorative colours needed to coordinate the palette, while requiring each product's vessel, structure, text, lighting, composition, and product count to remain fixed. The website offers Cocoa & ivory, Rose & blush, and Red romance as visualised signature palettes; Custom palette remains a consultation because its exact combination is not known in advance.

@@ -95,7 +95,7 @@ function Monogram() {
 export default function Home() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All pieces");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [selectedPalette, setSelectedPalette] = useState("Atelier choice");
+  const [selectedPalette, setSelectedPalette] = useState("Cocoa & ivory");
   const [menuOpen, setMenuOpen] = useState(false);
 
   const visibleProducts =
@@ -103,20 +103,64 @@ export default function Home() {
       ? products
       : products.filter((product) => product.category === filter);
 
-  const prestigePalettePreviews: Record<string, string> = {
-    "Atelier choice": "/images/prestige-collection.png",
-    "Cocoa & ivory": "/images/prestige-collection.png",
-    "Rose & blush": "/images/prestige-rose-blush.png",
-    "Red romance": "/images/prestige-red-romance.png",
-    "Custom palette": "/images/prestige-collection.png",
+  const productPalettePreviews: Record<string, Record<string, string>> = {
+    "The Signature Bouquet": {
+      "Cocoa & ivory": "/images/signature-bouquet.png",
+      "Rose & blush": "/images/signature-bouquet-rose-blush.png",
+      "Red romance": "/images/signature-bouquet-red-romance.png",
+      "Custom palette": "/images/signature-bouquet.png",
+    },
+    "Rose Elegance": {
+      "Cocoa & ivory": "/images/rose-elegance-cocoa-ivory.png",
+      "Rose & blush": "/images/rose-elegance.png",
+      "Red romance": "/images/rose-elegance-red-romance.png",
+      "Custom palette": "/images/rose-elegance.png",
+    },
+    "Love in Bloom": {
+      "Cocoa & ivory": "/images/love-in-bloom-cocoa-ivory.png",
+      "Rose & blush": "/images/love-in-bloom.png",
+      "Red romance": "/images/love-in-bloom-red-romance.png",
+      "Custom palette": "/images/love-in-bloom.png",
+    },
+    "The Prestige Collection": {
+      "Cocoa & ivory": "/images/prestige-collection.png",
+      "Rose & blush": "/images/prestige-rose-blush.png",
+      "Red romance": "/images/prestige-red-romance.png",
+      "Custom palette": "/images/prestige-collection.png",
+    },
+    "Baby Bliss": {
+      "Cocoa & ivory": "/images/baby-bliss-cocoa-ivory.png",
+      "Rose & blush": "/images/baby-bliss.png",
+      "Red romance": "/images/baby-bliss-red-romance.png",
+      "Custom palette": "/images/baby-bliss.png",
+    },
+    "Pure Elegance": {
+      "Cocoa & ivory": "/images/pure-elegance-cocoa-ivory.png",
+      "Rose & blush": "/images/pure-elegance-rose-blush.png",
+      "Red romance": "/images/pure-elegance-red-romance.png",
+      "Custom palette": "/images/pure-elegance.png",
+    },
+    "The Blooming Atelier": {
+      "Cocoa & ivory": "/images/blooming-atelier-cocoa-ivory.png",
+      "Rose & blush": "/images/blooming-atelier-rose-blush.png",
+      "Red romance": "/images/blooming-atelier-red-romance.png",
+      "Custom palette": "/images/blooming-atelier-rose-blush.png",
+    },
+    "Cocoa Tulip": {
+      "Cocoa & ivory": "/images/cocoa-tulip-cocoa-ivory.png",
+      "Rose & blush": "/images/cocoa-tulip.png",
+      "Red romance": "/images/cocoa-tulip-red-romance.png",
+      "Custom palette": "/images/cocoa-tulip.png",
+    },
   };
 
-  const modalImage = selectedProduct?.name === "The Prestige Collection"
-    ? prestigePalettePreviews[selectedPalette]
-    : selectedProduct?.image;
+  const activePalettePreviews = selectedProduct
+    ? productPalettePreviews[selectedProduct.name]
+    : undefined;
+  const modalImage = activePalettePreviews?.[selectedPalette] ?? selectedProduct?.image;
 
   function openProduct(product: Product) {
-    setSelectedPalette("Atelier choice");
+    setSelectedPalette("Cocoa & ivory");
     setSelectedProduct(product);
   }
 
@@ -424,8 +468,10 @@ export default function Home() {
                 fill
                 sizes="(max-width: 820px) 100vw, 420px"
               />
-              {selectedProduct.name === "The Prestige Collection" && (
-                <span className="palette-caption" aria-live="polite">{selectedPalette} preview</span>
+              {activePalettePreviews && (
+                <span className="palette-caption" aria-live="polite">
+                  {selectedPalette === "Custom palette" ? "Custom palette · consultation" : `${selectedPalette} preview`}
+                </span>
               )}
             </div>
             <div className="modal-content">
@@ -441,13 +487,12 @@ export default function Home() {
                     value={selectedPalette}
                     onChange={(event) => setSelectedPalette(event.target.value)}
                   >
-                    <option>Atelier choice</option>
                     <option>Cocoa &amp; ivory</option>
                     <option>Rose &amp; blush</option>
                     <option>Red romance</option>
                     <option>Custom palette</option>
                   </select>
-                  {selectedProduct.name === "The Prestige Collection" && (
+                  {activePalettePreviews && (
                     <span className="field-hint">The product preview updates for each signature palette.</span>
                   )}
                 </label>
