@@ -14,8 +14,9 @@ The direction is intentionally European, sophisticated and luxurious, but still 
 
 - A responsive Cocoa Atelier concept website.
 - Eight founding-collection pieces with interactive colour-palette previews.
-- Enquiry-led ordering for collection, bespoke, event and corporate requests.
-- Melbourne delivery and Click & Collect messaging.
+- Working enquiry forms for collection, bespoke, event and corporate requests, with email shown as a fallback.
+- Melbourne delivery across the collection and Click & Collect messaging.
+- Privacy, website terms and enquiry-confirmation pages.
 - Search, answer-engine and geographic metadata grounded in the business facts we currently know.
 - Market research, positioning and launch recommendations in `research/market-and-site-strategy.md`.
 
@@ -23,9 +24,9 @@ The original emails, extracted attachments and internal contact sheets remain lo
 
 ## Current status
 
-This is a public concept site, not a live online store. It does not yet take payments. Product selections open a prepared email so Elena can confirm availability, delivery and secure payment personally.
+This is a public concept site, not a live online store. It does not yet take payments. Product and general enquiries are sent through a static-site form service so Elena can confirm availability, delivery and secure payment personally. The first test submission will send an activation email to the Cocoa Atelier inbox; Elena or Mario needs to approve it once before submissions are forwarded.
 
-Before commercial launch, the final business name, domain, delivery zones, lead times, ingredients, allergens, refund terms, privacy wording and payment process need to be confirmed by Mario and Elena.
+Before commercial launch, Mario and Elena still need to confirm the final business name, domain, Click & Collect suburb, phone number, ABN, exact product sizes and counts, ingredients, allergen process, cancellation and refund terms. Stripe Payment Links remain the recommended next step for fixed products and confirmed quotes.
 
 ## Discoverability foundations
 
@@ -38,6 +39,7 @@ The site includes:
 - a web manifest;
 - Schema.org JSON-LD for the business, website, collection, products and visible FAQs;
 - descriptive headings, product copy, image alt text and answer-focused FAQ content.
+- lightweight WebP product imagery and cropped flagship previews that remove third-party branding.
 
 No address, telephone number, opening hours, ratings, reviews or verification codes have been invented. Those can be added when the business confirms them. Metadata helps engines understand the site; it cannot guarantee rankings, citations or rich-result treatment.
 

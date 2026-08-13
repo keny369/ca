@@ -16,9 +16,9 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["food", "shopping", "lifestyle"],
     icons: [
       {
-        src: assetPath("/images/logo-reference.jpeg"),
+        src: assetPath("/images/logo-reference.webp"),
         sizes: "any",
-        type: "image/jpeg",
+        type: "image/webp",
       },
     ],
   };

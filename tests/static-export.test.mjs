@@ -15,7 +15,10 @@ test("exports the complete Cocoa Atelier site for GitHub Pages", async () => {
   assert.match(html, /FAQPage/);
   assert.match(html, /https:\/\/keny369\.github\.io\/ca/);
   assert.match(html, /\/ca\/_next\/static\//);
-  assert.match(html, /\/ca\/images\/signature-bouquet\.png/);
+  assert.match(html, /\/ca\/images\/signature-bouquet-cropped\.webp/);
+  assert.match(html, /https:\/\/formsubmit\.co\/cocoaatelier%40outlook\.com|https:\/\/formsubmit\.co\/cocoaatelier@outlook\.com/);
+  assert.match(html, /Blossom Garden/);
+  assert.doesNotMatch(html, /The Blooming Atelier|Email this order request|Ordering not yet live/);
   assert.doesNotMatch(html, /chatgpt\.site|workspace-324323|codex-preview/i);
 });
 
@@ -37,9 +40,13 @@ test("exports crawl, sitemap and manifest files with the GitHub Pages canonical"
 
 test("includes public imagery and browser scripts in the static export", async () => {
   await Promise.all([
-    access(new URL("images/hero-atelier-bouquets.png", out)),
-    access(new URL("images/signature-bouquet.png", out)),
+    access(new URL("images/hero-atelier-bouquets.webp", out)),
+    access(new URL("images/signature-bouquet-cropped.webp", out)),
+    access(new URL("images/blooming-atelier-rose-blush.webp", out)),
     access(new URL("og.png", out)),
+    access(new URL("privacy/index.html", out)),
+    access(new URL("terms/index.html", out)),
+    access(new URL("thanks/index.html", out)),
   ]);
 
   const staticEntries = await readdir(new URL("_next/static/", out), { recursive: true });

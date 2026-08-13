@@ -1,16 +1,25 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { assetPath } from "./site-config";
+import {
+  allergenNotice,
+  assetPath,
+  collectionLeadTime,
+  contactEmail,
+  instagramUrl,
+  siteUrl,
+} from "./site-config";
 
 type Product = {
   name: string;
   price: string;
   image: string;
   alt: string;
-  category: "Bouquets" | "Gift boxes" | "Statement pieces";
+  category: "Bouquets" | "Keepsake gifts" | "Grand gestures";
   note: string;
+  details: string;
+  defaultPalette: string;
   badge?: string;
 };
 
@@ -18,72 +27,98 @@ const products: Product[] = [
   {
     name: "The Signature Bouquet",
     price: "from $220",
-    image: "/images/signature-bouquet.png",
+    image: "/images/signature-bouquet-cropped.webp",
     alt: "Chocolate strawberry bouquet in cocoa and ivory tones",
     category: "Bouquets",
-    note: "Chocolate-dipped strawberries composed in cocoa and ivory.",
+    note: "Chocolate-dipped strawberries arranged in cocoa and ivory.",
+    details: "Hand-dipped strawberry bouquet · kraft wrap · satin bow",
+    defaultPalette: "Cocoa & ivory",
     badge: "Atelier favourite",
-  },
-  {
-    name: "Rose Elegance",
-    price: "$400",
-    image: "/images/rose-elegance.png",
-    alt: "Pink rose and chocolate strawberry arrangement",
-    category: "Statement pieces",
-    note: "Fresh roses and hand-finished strawberries in a generous composition.",
-  },
-  {
-    name: "Love in Bloom",
-    price: "$180",
-    image: "/images/love-in-bloom.png",
-    alt: "Pink heart gift box with chocolate strawberries and roses",
-    category: "Gift boxes",
-    note: "A heart-shaped arrangement for affection in all its forms.",
-    badge: "Made for gifting",
   },
   {
     name: "The Prestige Collection",
     price: "from $180",
-    image: "/images/prestige-collection.png",
+    image: "/images/prestige-collection.webp",
     alt: "Chocolate strawberries in a clear rose-gold presentation box",
-    category: "Statement pieces",
+    category: "Keepsake gifts",
     note: "A sculptural presentation piece, made for the grand reveal.",
-  },
-  {
-    name: "Baby Bliss",
-    price: "$110",
-    image: "/images/baby-bliss.png",
-    alt: "Pink pram-shaped gift box filled with chocolate strawberries",
-    category: "Gift boxes",
-    note: "A gentle welcome for a little one, styled in your chosen palette.",
+    details: "Hand-dipped strawberries · clear keepsake cylinder · ribbon finish",
+    defaultPalette: "Cocoa & ivory",
   },
   {
     name: "Pure Elegance",
     price: "from $200",
-    image: "/images/pure-elegance.png",
+    image: "/images/pure-elegance.webp",
     alt: "White chocolate strawberry bouquet",
     category: "Bouquets",
-    note: "An all-white composition with a quiet, ceremonial finish.",
+    note: "An all-white arrangement with a quiet, ceremonial finish.",
+    details: "White chocolate finish · hand-arranged bouquet · presentation wrap",
+    defaultPalette: "Pure ivory",
   },
   {
-    name: "The Blooming Atelier",
+    name: "Love in Bloom",
+    price: "$180",
+    image: "/images/love-in-bloom.webp",
+    alt: "Pink heart gift box with chocolate strawberries and roses",
+    category: "Keepsake gifts",
+    note: "A heart-shaped arrangement for affection in all its forms.",
+    details: "Heart-shaped presentation box · roses · chocolate-dipped strawberries",
+    defaultPalette: "Rose & blush",
+    badge: "Made for gifting",
+  },
+  {
+    name: "Baby Bliss",
+    price: "$110",
+    image: "/images/baby-bliss.webp",
+    alt: "Pink pram-shaped gift box filled with chocolate strawberries",
+    category: "Keepsake gifts",
+    note: "A gentle welcome for a little one, styled in your chosen palette.",
+    details: "Pram keepsake box · chocolate-dipped strawberries · ribbon finish",
+    defaultPalette: "Rose & blush",
+  },
+  {
+    name: "Blossom Garden",
     price: "$160",
-    image: "/images/blooming-atelier.jpeg",
+    image: "/images/blooming-atelier-rose-blush.webp",
     alt: "Pink and white chocolate tulips and roses in a round hat box",
     category: "Bouquets",
     note: "Chocolate roses and tulips arranged as a lasting first impression.",
+    details: "Chocolate-dipped strawberries · fresh roses · round presentation box",
+    defaultPalette: "Rose & blush",
   },
   {
     name: "Cocoa Tulip",
     price: "$330",
-    image: "/images/cocoa-tulip.png",
+    image: "/images/cocoa-tulip.webp",
     alt: "Pink and white tulip-inspired chocolate strawberry arrangement",
-    category: "Statement pieces",
+    category: "Grand gestures",
     note: "Our signature tulip-inspired form, finished entirely by hand.",
+    details: "Tulip-inspired chocolate strawberries · round hat box · gift ribbon",
+    defaultPalette: "Rose & blush",
+  },
+  {
+    name: "Rose Elegance",
+    price: "$400",
+    image: "/images/rose-elegance.webp",
+    alt: "Pink rose and chocolate strawberry arrangement",
+    category: "Grand gestures",
+    note: "Fresh roses and hand-finished strawberries in a generous arrangement.",
+    details: "Fresh rose arrangement · chocolate-dipped strawberries · presentation box",
+    defaultPalette: "Rose & blush",
   },
 ];
 
-const filters = ["All pieces", "Bouquets", "Gift boxes", "Statement pieces"] as const;
+const filters = ["All pieces", "Bouquets", "Keepsake gifts", "Grand gestures"] as const;
+const formAction = `https://formsubmit.co/${contactEmail}`;
+const paletteOptions = [
+  "Cocoa & ivory",
+  "Pure ivory",
+  "Rose & blush",
+  "Red romance",
+  "Blue — consultation",
+  "Lavender — consultation",
+  "Custom palette",
+] as const;
 
 function Monogram() {
   return (
@@ -106,52 +141,53 @@ export default function Home() {
 
   const productPalettePreviews: Record<string, Record<string, string>> = {
     "The Signature Bouquet": {
-      "Cocoa & ivory": "/images/signature-bouquet.png",
-      "Rose & blush": "/images/signature-bouquet-rose-blush.png",
-      "Red romance": "/images/signature-bouquet-red-romance.png",
-      "Custom palette": "/images/signature-bouquet.png",
+      "Cocoa & ivory": "/images/signature-bouquet-cropped.webp",
+      "Rose & blush": "/images/signature-bouquet-rose-blush-cropped.webp",
+      "Red romance": "/images/signature-bouquet-red-romance-cropped.webp",
+      "Custom palette": "/images/signature-bouquet-cropped.webp",
     },
     "Rose Elegance": {
-      "Cocoa & ivory": "/images/rose-elegance-cocoa-ivory.png",
-      "Rose & blush": "/images/rose-elegance.png",
-      "Red romance": "/images/rose-elegance-red-romance.png",
-      "Custom palette": "/images/rose-elegance.png",
+      "Cocoa & ivory": "/images/rose-elegance-cocoa-ivory.webp",
+      "Rose & blush": "/images/rose-elegance.webp",
+      "Red romance": "/images/rose-elegance-red-romance.webp",
+      "Custom palette": "/images/rose-elegance.webp",
     },
     "Love in Bloom": {
-      "Cocoa & ivory": "/images/love-in-bloom-cocoa-ivory.png",
-      "Rose & blush": "/images/love-in-bloom.png",
-      "Red romance": "/images/love-in-bloom-red-romance.png",
-      "Custom palette": "/images/love-in-bloom.png",
+      "Cocoa & ivory": "/images/love-in-bloom-cocoa-ivory.webp",
+      "Rose & blush": "/images/love-in-bloom.webp",
+      "Red romance": "/images/love-in-bloom-red-romance.webp",
+      "Custom palette": "/images/love-in-bloom.webp",
     },
     "The Prestige Collection": {
-      "Cocoa & ivory": "/images/prestige-collection.png",
-      "Rose & blush": "/images/prestige-rose-blush.png",
-      "Red romance": "/images/prestige-red-romance.png",
-      "Custom palette": "/images/prestige-collection.png",
+      "Cocoa & ivory": "/images/prestige-collection.webp",
+      "Rose & blush": "/images/prestige-rose-blush.webp",
+      "Red romance": "/images/prestige-red-romance.webp",
+      "Custom palette": "/images/prestige-collection.webp",
     },
     "Baby Bliss": {
-      "Cocoa & ivory": "/images/baby-bliss-cocoa-ivory.png",
-      "Rose & blush": "/images/baby-bliss.png",
-      "Red romance": "/images/baby-bliss-red-romance.png",
-      "Custom palette": "/images/baby-bliss.png",
+      "Cocoa & ivory": "/images/baby-bliss-cocoa-ivory.webp",
+      "Rose & blush": "/images/baby-bliss.webp",
+      "Red romance": "/images/baby-bliss-red-romance.webp",
+      "Custom palette": "/images/baby-bliss.webp",
     },
     "Pure Elegance": {
-      "Cocoa & ivory": "/images/pure-elegance-cocoa-ivory.png",
-      "Rose & blush": "/images/pure-elegance-rose-blush.png",
-      "Red romance": "/images/pure-elegance-red-romance.png",
-      "Custom palette": "/images/pure-elegance.png",
+      "Pure ivory": "/images/pure-elegance.webp",
+      "Cocoa & ivory": "/images/pure-elegance-cocoa-ivory.webp",
+      "Rose & blush": "/images/pure-elegance-rose-blush.webp",
+      "Red romance": "/images/pure-elegance-red-romance.webp",
+      "Custom palette": "/images/pure-elegance.webp",
     },
-    "The Blooming Atelier": {
-      "Cocoa & ivory": "/images/blooming-atelier-cocoa-ivory.png",
-      "Rose & blush": "/images/blooming-atelier-rose-blush.png",
-      "Red romance": "/images/blooming-atelier-red-romance.png",
-      "Custom palette": "/images/blooming-atelier-rose-blush.png",
+    "Blossom Garden": {
+      "Cocoa & ivory": "/images/blooming-atelier-cocoa-ivory.webp",
+      "Rose & blush": "/images/blooming-atelier-rose-blush.webp",
+      "Red romance": "/images/blooming-atelier-red-romance.webp",
+      "Custom palette": "/images/blooming-atelier-rose-blush.webp",
     },
     "Cocoa Tulip": {
-      "Cocoa & ivory": "/images/cocoa-tulip-cocoa-ivory.png",
-      "Rose & blush": "/images/cocoa-tulip.png",
-      "Red romance": "/images/cocoa-tulip-red-romance.png",
-      "Custom palette": "/images/cocoa-tulip.png",
+      "Cocoa & ivory": "/images/cocoa-tulip-cocoa-ivory.webp",
+      "Rose & blush": "/images/cocoa-tulip.webp",
+      "Red romance": "/images/cocoa-tulip-red-romance.webp",
+      "Custom palette": "/images/cocoa-tulip.webp",
     },
   };
 
@@ -161,9 +197,18 @@ export default function Home() {
   const modalImage = activePalettePreviews?.[selectedPalette] ?? selectedProduct?.image;
 
   function openProduct(product: Product) {
-    setSelectedPalette("Cocoa & ivory");
+    setSelectedPalette(product.defaultPalette);
     setSelectedProduct(product);
   }
+
+  useEffect(() => {
+    const dateInputs = document.querySelectorAll<HTMLInputElement>('input[type="date"][data-min-lead-days]');
+    dateInputs.forEach((input) => {
+      const earliest = new Date();
+      earliest.setDate(earliest.getDate() + Number(input.dataset.minLeadDays ?? 0));
+      input.min = earliest.toISOString().slice(0, 10);
+    });
+  }, [selectedProduct]);
 
   useEffect(() => {
     if (!selectedProduct) return;
@@ -177,25 +222,6 @@ export default function Home() {
       document.body.classList.remove("modal-open");
     };
   }, [selectedProduct]);
-
-  function submitOrderRequest(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!selectedProduct) return;
-    const data = new FormData(event.currentTarget);
-    const subject = `Order enquiry: ${selectedProduct.name}`;
-    const body = [
-      `Hello Elena,`,
-      ``,
-      `I would like to enquire about ${selectedProduct.name} (${selectedProduct.price}).`,
-      `Preferred palette: ${data.get("palette")}`,
-      `Fulfilment: ${data.get("fulfilment")}`,
-      `Preferred date: ${data.get("date") || "To be confirmed"}`,
-      `Gift note / request: ${data.get("message") || "None"}`,
-      ``,
-      `Please confirm availability and the next step for secure payment.`,
-    ].join("\n");
-    window.location.href = `mailto:cocoaatelier@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
 
   return (
     <main>
@@ -233,18 +259,24 @@ export default function Home() {
           <p className="eyebrow light">Handcrafted in Melbourne</p>
           <h1>A gift, composed<br />to be remembered.</h1>
           <p className="hero-intro">
-            Strawberry bouquets and sculptural chocolate gifts, made fresh to order
-            for the moments that deserve more than ordinary.
+            Chocolate-dipped strawberry bouquets and sculptural edible gifts, made fresh
+            to order in Melbourne for moments that deserve more than ordinary.
           </p>
           <div className="hero-actions">
-            <a className="button button-ivory" href="#collection">Discover the collection</a>
+            <a className="button button-ivory" href="#collection">Explore the collection</a>
             <a className="text-link light-link" href="#bespoke">Create something bespoke <span>↗</span></a>
           </div>
           <p className="hero-service">Local Melbourne delivery · Click &amp; Collect by appointment</p>
         </div>
-        <div className="hero-image" role="img" aria-label="A collection of Cocoa Atelier chocolate strawberry bouquets">
+        <div className="hero-image">
+          <Image
+            src={assetPath("/images/hero-atelier-bouquets.webp")}
+            alt="A collection of Cocoa Atelier chocolate strawberry bouquets"
+            fill
+            priority
+            sizes="(max-width: 820px) 100vw, 55vw"
+          />
           <div className="hero-image-note">
-            <span>01</span>
             <p>Fresh strawberries<br />Finished by hand</p>
           </div>
         </div>
@@ -253,7 +285,7 @@ export default function Home() {
       <div className="service-strip" aria-label="Service highlights">
         <p><span>Made to order</span> in our Melbourne atelier</p>
         <p><span>Complimentary</span> personalised gift note</p>
-        <p><span>Local delivery</span> on orders from $160</p>
+        <p><span>Melbourne delivery</span> quoted by suburb</p>
       </div>
 
       <section className="collection section" id="collection">
@@ -264,7 +296,7 @@ export default function Home() {
           </div>
           <p className="section-intro">
             A concise edit of gifts for celebrations, affection and unforgettable arrivals.
-            Every piece is composed fresh, then personalised for its recipient.
+            Every piece is assembled fresh, then personalised for its recipient.
           </p>
         </div>
 
@@ -288,7 +320,7 @@ export default function Home() {
                 className="product-image-wrap"
                 type="button"
                 onClick={() => openProduct(product)}
-                aria-label={`Personalise ${product.name}`}
+                aria-label={`Enquire about ${product.name}`}
               >
                 {product.badge && <span className="product-badge">{product.badge}</span>}
                 <Image
@@ -298,7 +330,7 @@ export default function Home() {
                   sizes="(max-width: 560px) 86vw, (max-width: 820px) 43vw, (max-width: 1120px) 29vw, 22vw"
                   className={`product-image product-position-${index + 1}`}
                 />
-                <span className="quick-view">Personalise <span>↗</span></span>
+                <span className="quick-view">Enquire <span>↗</span></span>
               </button>
               <div className="product-info">
                 <div>
@@ -308,6 +340,7 @@ export default function Home() {
                 <p className="product-price">{product.price}</p>
               </div>
               <p className="product-note">{product.note}</p>
+              <p className="product-details">{product.details}</p>
             </article>
           ))}
         </div>
@@ -316,7 +349,7 @@ export default function Home() {
       <section className="bespoke section" id="bespoke">
         <div className="bespoke-image">
           <Image
-            src={assetPath("/images/atelier-editorial.png")}
+            src={assetPath("/images/atelier-editorial.webp")}
             alt="A white Cocoa Atelier presentation piece in a clear keepsake box"
             fill
             sizes="(max-width: 820px) 86vw, 46vw"
@@ -329,7 +362,7 @@ export default function Home() {
         </div>
         <div className="bespoke-copy">
           <p className="eyebrow">The bespoke atelier</p>
-          <h2>Choose the feeling.<br />We’ll compose the rest.</h2>
+          <h2>Start with a feeling. Elena shapes every detail.</h2>
           <p>
             Begin with a palette, an occasion or a person. Elena will guide the flowers,
             chocolate finish, vessel and ribbon into one harmonious piece.
@@ -339,14 +372,14 @@ export default function Home() {
             <div><span>02</span><p><strong>Your composition</strong>Bouquet, keepsake box, tower or a centrepiece designed for the room.</p></div>
             <div><span>03</span><p><strong>Your final touch</strong>A considered ribbon, gift message and presentation made for arrival.</p></div>
           </div>
-          <a className="button button-dark" href="mailto:cocoaatelier@outlook.com?subject=Bespoke%20Cocoa%20Atelier%20enquiry">Begin a bespoke order</a>
+          <a className="button button-dark" href="#contact">Begin an enquiry</a>
         </div>
       </section>
 
       <section className="process section">
         <div className="process-title">
           <p className="eyebrow">How it works</p>
-          <h2>Made slowly.<br />Ordered simply.</h2>
+          <h2>A considered process, from brief to delivery.</h2>
         </div>
         <div className="process-steps">
           <article><span>01</span><h3>Select your piece</h3><p>Choose a signature design or begin with a bespoke brief.</p></article>
@@ -355,24 +388,31 @@ export default function Home() {
         </div>
         <div className="delivery-card">
           <p className="eyebrow">A note on delivery</p>
-          <p>Local Melbourne delivery is available for orders of $160 or more. Delivery is calculated for your suburb. Orders below $160 are available for Click &amp; Collect.</p>
+          <p>Melbourne delivery is available across the collection, with the fee quoted for your suburb. Click &amp; Collect is available by appointment.</p>
           <a href="#faq">Read delivery &amp; care <span>→</span></a>
         </div>
       </section>
 
       <section className="events" id="events">
-        <div className="events-image" role="img" aria-label="Cocoa Atelier chocolate strawberry arrangements at an evening event" />
+        <div className="events-image">
+          <Image
+            src={assetPath("/images/prestige-collection.webp")}
+            alt="Chocolate strawberries in a clear keepsake presentation cylinder"
+            fill
+            sizes="(max-width: 820px) 100vw, 56vw"
+          />
+        </div>
         <div className="events-copy">
           <p className="eyebrow light">Events &amp; corporate</p>
           <h2>Made for the room.<br />Remembered after it.</h2>
           <p>
             Sculptural dessert towers, wedding tables, client gifting and custom collections,
-            composed around your event, palette and guest list.
+            styled around your event, palette and guest list.
           </p>
           <div className="events-list">
             <span>Weddings</span><span>Milestones</span><span>Corporate gifting</span><span>Grazing tables</span>
           </div>
-          <a className="button button-ivory" href="mailto:cocoaatelier@outlook.com?subject=Cocoa%20Atelier%20event%20enquiry">Request an event proposal</a>
+          <a className="button button-ivory" href="#contact">Request an event proposal</a>
         </div>
       </section>
 
@@ -387,13 +427,13 @@ export default function Home() {
           <p>
             Each arrangement is made fresh in Melbourne using carefully selected strawberries,
             chocolate finishes and considered presentation. No production line—just patient
-            hands, a trained eye and a piece composed for one particular moment.
+            hands, a trained eye and a piece finished for one particular moment.
           </p>
-          <a className="text-link" href="mailto:cocoaatelier@outlook.com?subject=Hello%20Cocoa%20Atelier">Meet the atelier <span>↗</span></a>
+          <a className="text-link" href={instagramUrl}>Meet the atelier on Instagram <span>↗</span></a>
         </div>
         <div className="atelier-still-life">
           <Image
-            src={assetPath("/images/atelier-gift-box.png")}
+            src={assetPath("/images/atelier-gift-box.webp")}
             alt="Chocolate rose strawberries in a wooden gift box"
             fill
             sizes="(max-width: 820px) 86vw, 52vw"
@@ -408,12 +448,12 @@ export default function Home() {
           <p className="eyebrow">The details</p>
           <h2>Before you order.</h2>
           <p>Need something not covered here? Elena would be delighted to help.</p>
-          <a href="mailto:cocoaatelier@outlook.com">cocoaatelier@outlook.com</a>
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </div>
         <div className="faq-list">
           <details>
             <summary>How much notice do you need?<span>+</span></summary>
-            <p>Every piece is made fresh to order. Lead times will be confirmed with availability; event, tower and large corporate orders should be discussed as early as possible.</p>
+            <p>{collectionLeadTime} Earlier notice gives us the best chance of securing your preferred date and palette.</p>
           </details>
           <details>
             <summary>Can I choose the colours?<span>+</span></summary>
@@ -421,11 +461,11 @@ export default function Home() {
           </details>
           <details>
             <summary>Where do you deliver?<span>+</span></summary>
-            <p>Cocoa Atelier offers local Melbourne delivery on orders of $160 or more. Delivery fees depend on the suburb. Click &amp; Collect is available by appointment.</p>
+            <p>Cocoa Atelier offers Melbourne delivery across the collection. The delivery fee is quoted for your suburb, and Click &amp; Collect is available by appointment.</p>
           </details>
           <details>
             <summary>What about allergens and storage?<span>+</span></summary>
-            <p>Chocolate products commonly contain milk and soy and may be prepared where other allergens are present. Exact ingredient, allergen and care information will be provided before orders open.</p>
+            <p>{allergenNotice} Refrigerate your gift on arrival and enjoy it promptly; Elena will provide product-specific care details with your order.</p>
           </details>
           <details>
             <summary>Do you create corporate and event orders?<span>+</span></summary>
@@ -434,11 +474,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="contact-panel">
+      <section className="contact-panel" id="contact">
         <p className="eyebrow light">A beautiful beginning</p>
         <h2>Tell us what you’re celebrating.</h2>
-        <p>For bespoke orders, events and early collection enquiries, write to the atelier.</p>
-        <a className="button button-ivory" href="mailto:cocoaatelier@outlook.com?subject=Cocoa%20Atelier%20enquiry">Contact the atelier</a>
+        <p>Send Elena the essentials and she’ll reply with availability, delivery and the next step.</p>
+        <form className="contact-form" action={formAction} method="POST">
+          <input type="hidden" name="_subject" value="New Cocoa Atelier website enquiry" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value={`${siteUrl}/thanks/`} />
+          <input type="hidden" name="_url" value={`${siteUrl}/#contact`} />
+          <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+          <label>Your name<input name="name" autoComplete="name" required /></label>
+          <label>Email<input name="email" type="email" autoComplete="email" required /></label>
+          <label>Phone<input name="phone" type="tel" autoComplete="tel" /></label>
+          <label>What can we make for you?<select name="enquiry_type" defaultValue="Collection piece"><option>Collection piece</option><option>Bespoke gift</option><option>Event or wedding</option><option>Corporate gifting</option></select></label>
+          <label className="wide-field">Tell us about the date, suburb, quantity and occasion<textarea name="message" rows={4} required /></label>
+          <label className="form-consent wide-field"><input name="privacy_consent" type="checkbox" value="Agreed" required />I agree to the <a href={assetPath("/privacy/")}>Privacy Policy</a>.</label>
+          <button className="button button-ivory full-button" type="submit">Send enquiry</button>
+        </form>
+        <p className="contact-fallback">Prefer email? <a href={`mailto:${contactEmail}`}>{contactEmail}</a> · <a href={instagramUrl}>Instagram</a></p>
       </section>
 
       <footer>
@@ -449,10 +503,10 @@ export default function Home() {
         </div>
         <div className="footer-links">
           <div><p>Discover</p><a href="#collection">The collection</a><a href="#bespoke">Bespoke</a><a href="#events">Events &amp; corporate</a></div>
-          <div><p>Information</p><a href="#faq">Delivery &amp; care</a><a href="#faq">FAQ</a><a href="mailto:cocoaatelier@outlook.com">Contact</a></div>
-          <div><p>Follow</p><a href="https://www.instagram.com/cocoaatelierart/">Instagram</a><a href="mailto:cocoaatelier@outlook.com">Email</a></div>
+          <div><p>Information</p><a href="#faq">Delivery &amp; care</a><a href="#faq">FAQ</a><a href={assetPath("/privacy/")}>Privacy</a><a href={assetPath("/terms/")}>Terms</a></div>
+          <div><p>Follow</p><a href={instagramUrl}>Instagram</a><a href={`mailto:${contactEmail}`}>{contactEmail}</a></div>
         </div>
-        <div className="footer-bottom"><span>© 2026 Cocoa Atelier</span><span>Melbourne, Australia</span><span>Website concept · Ordering not yet live</span></div>
+        <div className="footer-bottom"><span>© 2026 Cocoa Atelier</span><span>Melbourne, Australia</span><span>Made fresh to order</span></div>
       </footer>
 
       {selectedProduct && (
@@ -460,7 +514,7 @@ export default function Home() {
           if (event.target === event.currentTarget) setSelectedProduct(null);
         }}>
           <section className="order-modal" role="dialog" aria-modal="true" aria-labelledby="order-title">
-            <button className="modal-close" type="button" onClick={() => setSelectedProduct(null)} aria-label="Close order preview">×</button>
+            <button className="modal-close" type="button" onClick={() => setSelectedProduct(null)} aria-label="Close product enquiry">×</button>
             <div className="modal-image">
               <Image
                 key={modalImage}
@@ -471,16 +525,27 @@ export default function Home() {
               />
               {activePalettePreviews && (
                 <span className="palette-caption" aria-live="polite">
-                  {selectedPalette === "Custom palette" ? "Custom palette · consultation" : `${selectedPalette} preview`}
+                  {selectedPalette.includes("consultation") || selectedPalette === "Custom palette" ? `${selectedPalette} · preview by consultation` : `${selectedPalette} preview`}
                 </span>
               )}
             </div>
             <div className="modal-content">
-              <p className="eyebrow">Order preview</p>
+              <p className="eyebrow">Product enquiry</p>
               <h2 id="order-title">{selectedProduct.name}</h2>
               <p className="modal-price">{selectedProduct.price}</p>
               <p>{selectedProduct.note}</p>
-              <form onSubmit={submitOrderRequest}>
+              <p className="modal-details">{selectedProduct.details}</p>
+              <form action={formAction} method="POST">
+                <input type="hidden" name="_subject" value={`Product enquiry: ${selectedProduct.name}`} />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_next" value={`${siteUrl}/thanks/`} />
+                <input type="hidden" name="_url" value={`${siteUrl}/#collection`} />
+                <input type="hidden" name="product" value={selectedProduct.name} />
+                <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+                <label>Your name<input name="name" autoComplete="name" required /></label>
+                <label>Email<input name="email" type="email" autoComplete="email" required /></label>
+                <label>Phone<input name="phone" type="tel" autoComplete="tel" required /></label>
+                <label>Recipient phone <span className="field-hint">For delivery coordination</span><input name="recipient_phone" type="tel" /></label>
                 <label>
                   Preferred palette
                   <select
@@ -488,20 +553,20 @@ export default function Home() {
                     value={selectedPalette}
                     onChange={(event) => setSelectedPalette(event.target.value)}
                   >
-                    <option>Cocoa &amp; ivory</option>
-                    <option>Rose &amp; blush</option>
-                    <option>Red romance</option>
-                    <option>Custom palette</option>
+                    {paletteOptions.map((palette) => <option key={palette}>{palette}</option>)}
                   </select>
                   {activePalettePreviews && (
                     <span className="field-hint">The product preview updates for each signature palette.</span>
                   )}
                 </label>
-                <label>Fulfilment<select name="fulfilment" defaultValue="Click & Collect"><option>Click &amp; Collect</option><option>Melbourne delivery — orders from $160</option></select></label>
-                <label>Preferred date<input name="date" type="date" /></label>
-                <label>Gift note or request<textarea name="message" rows={3} placeholder="Tell us who it is for, or add a complimentary gift note." /></label>
-                <p className="modal-fineprint">This concept site is not taking payments yet. Your email app will open with this request ready to send. Elena can then confirm availability and secure payment.</p>
-                <button className="button button-dark full-button" type="submit">Email this order request</button>
+                <label>Size<select name="size" defaultValue={selectedProduct.price.startsWith("from") ? `Signature size — ${selectedProduct.price}` : `As pictured — ${selectedProduct.price}`}><option>{selectedProduct.price.startsWith("from") ? `Signature size — ${selectedProduct.price}` : `As pictured — ${selectedProduct.price}`}</option><option>Larger or custom size — quote</option></select></label>
+                <label>Quantity<input name="quantity" type="number" min="1" defaultValue="1" required /></label>
+                <label>Fulfilment<select name="fulfilment" defaultValue="Click & Collect"><option>Click &amp; Collect</option><option>Melbourne delivery — fee quoted by suburb</option></select></label>
+                <label>Preferred date<input name="date" type="date" data-min-lead-days="2" required /></label>
+                <label className="wide-field">Gift note or request<textarea name="message" rows={3} placeholder="Tell us who it is for, or add a complimentary gift note." /></label>
+                <label className="form-consent wide-field"><input name="privacy_consent" type="checkbox" value="Agreed" required />I agree to the <a href={assetPath("/privacy/")}>Privacy Policy</a>.</label>
+                <p className="modal-fineprint">Elena will confirm availability, the final delivery fee and secure payment. Prefer email? <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+                <button className="button button-dark full-button" type="submit">Send enquiry</button>
               </form>
             </div>
           </section>

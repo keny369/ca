@@ -15,6 +15,12 @@ export const contactEmail = "cocoaatelier@outlook.com";
 
 export const instagramUrl = "https://www.instagram.com/cocoaatelierart/";
 
+export const collectionLeadTime =
+  "Please allow at least 48 hours for collection pieces and one week for towers, events and larger corporate orders.";
+
+export const allergenNotice =
+  "Chocolate products contain milk and soy and may contain traces of other allergens.";
+
 export const location = {
   city: "Melbourne",
   region: "Victoria",

@@ -1,4 +1,6 @@
 import {
+  allergenNotice,
+  collectionLeadTime,
   contactEmail,
   instagramUrl,
   location,
@@ -10,58 +12,58 @@ import {
 const products = [
   {
     name: "The Signature Bouquet",
-    description: "Chocolate-dipped strawberries composed in cocoa and ivory.",
+    description: "Chocolate-dipped strawberries arranged in cocoa and ivory.",
     category: "Chocolate strawberry bouquets",
-    image: "/images/signature-bouquet.png",
+    image: "/images/signature-bouquet-cropped.webp",
     lowPrice: "220",
   },
   {
     name: "Rose Elegance",
-    description: "Fresh roses and hand-finished strawberries in a generous composition.",
-    category: "Chocolate strawberry statement pieces",
-    image: "/images/rose-elegance.png",
+    description: "Fresh roses and hand-finished strawberries in a generous arrangement.",
+    category: "Chocolate strawberry grand gestures",
+    image: "/images/rose-elegance.webp",
     price: "400",
   },
   {
     name: "Love in Bloom",
     description: "A heart-shaped chocolate strawberry arrangement for affection in all its forms.",
-    category: "Chocolate gift boxes",
-    image: "/images/love-in-bloom.png",
+    category: "Chocolate strawberry keepsake gifts",
+    image: "/images/love-in-bloom.webp",
     price: "180",
   },
   {
     name: "The Prestige Collection",
     description: "A sculptural chocolate strawberry presentation piece, made for the grand reveal.",
-    category: "Chocolate strawberry statement pieces",
-    image: "/images/prestige-collection.png",
+    category: "Chocolate strawberry keepsake gifts",
+    image: "/images/prestige-collection.webp",
     lowPrice: "180",
   },
   {
     name: "Baby Bliss",
     description: "A gentle new-baby gift styled in a chosen colour palette.",
-    category: "Chocolate gift boxes",
-    image: "/images/baby-bliss.png",
+    category: "Chocolate strawberry keepsake gifts",
+    image: "/images/baby-bliss.webp",
     price: "110",
   },
   {
     name: "Pure Elegance",
-    description: "An all-white chocolate strawberry composition with a quiet, ceremonial finish.",
+    description: "An all-white chocolate strawberry arrangement with a quiet, ceremonial finish.",
     category: "Chocolate strawberry bouquets",
-    image: "/images/pure-elegance.png",
+    image: "/images/pure-elegance.webp",
     lowPrice: "200",
   },
   {
-    name: "The Blooming Atelier",
+    name: "Blossom Garden",
     description: "Chocolate roses and tulips arranged as a lasting first impression.",
     category: "Chocolate bouquets",
-    image: "/images/blooming-atelier.jpeg",
+    image: "/images/blooming-atelier-rose-blush.webp",
     price: "160",
   },
   {
     name: "Cocoa Tulip",
     description: "A signature tulip-inspired chocolate strawberry form, finished entirely by hand.",
-    category: "Chocolate strawberry statement pieces",
-    image: "/images/cocoa-tulip.png",
+    category: "Chocolate strawberry grand gestures",
+    image: "/images/cocoa-tulip.webp",
     price: "330",
   },
 ] as const;
@@ -70,7 +72,7 @@ const faqs = [
   {
     question: "How much notice does Cocoa Atelier need?",
     answer:
-      "Every piece is made fresh to order. Lead times are confirmed with availability, and event, tower and large corporate orders should be discussed as early as possible.",
+      `${collectionLeadTime} Earlier notice gives the best chance of securing a preferred date and palette.`,
   },
   {
     question: "Can I choose the colours of my Cocoa Atelier gift?",
@@ -80,12 +82,12 @@ const faqs = [
   {
     question: "Where does Cocoa Atelier deliver?",
     answer:
-      "Cocoa Atelier offers local Melbourne delivery on orders of $160 or more. Delivery fees depend on the suburb. Click and Collect is available by appointment.",
+      "Cocoa Atelier offers Melbourne delivery across the collection. The delivery fee is quoted for the destination suburb, and Click and Collect is available by appointment.",
   },
   {
     question: "What should I know about allergens and storage?",
     answer:
-      "Chocolate products commonly contain milk and soy and may be prepared where other allergens are present. Exact ingredient, allergen and care information will be provided before orders open.",
+      `${allergenNotice} Gifts should be refrigerated on arrival and enjoyed promptly; product-specific care details are supplied with the order.`,
   },
   {
     question: "Does Cocoa Atelier create corporate and event orders?",
@@ -142,7 +144,7 @@ const structuredData = {
       url: siteUrl,
       description: siteDescription,
       email: contactEmail,
-      logo: absoluteUrl("/images/logo-reference.jpeg"),
+      logo: absoluteUrl("/images/logo-reference.webp"),
       image: absoluteUrl("/og.png"),
       sameAs: [instagramUrl],
       address: {
