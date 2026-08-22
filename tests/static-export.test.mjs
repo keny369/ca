@@ -7,7 +7,7 @@ const out = new URL("../out/", import.meta.url);
 test("exports the complete Cocoa Atelier site for GitHub Pages", async () => {
   const html = await readFile(new URL("index.html", out), "utf8");
 
-  assert.match(html, /<title>Cocoa Atelier \| Chocolate Strawberry Bouquets Melbourne<\/title>/i);
+  assert.match(html, /<title>Cocoa Atelier \| Chocolate Strawberry Bouquets &amp; Grazing Melbourne<\/title>/i);
   assert.match(html, /A gift, composed/);
   assert.match(html, /The founding collection/);
   assert.match(html, /application\/ld\+json/);
@@ -18,6 +18,15 @@ test("exports the complete Cocoa Atelier site for GitHub Pages", async () => {
   assert.match(html, /\/ca\/images\/signature-bouquet-cropped\.webp/);
   assert.match(html, /https:\/\/formsubmit\.co\/cocoaatelier%40outlook\.com|https:\/\/formsubmit\.co\/cocoaatelier@outlook\.com/);
   assert.match(html, /Blossom Garden/);
+  assert.match(html, /Seasonal Fruit Grazing Box/);
+  assert.match(html, /Grazing Tables &amp; Dessert Stations/);
+  assert.match(html, /tel:\+61447615490/);
+  assert.match(html, /0447 615 490/);
+  assert.match(html, /https:\/\/www\.tiktok\.com\/@cocoa\.atelier6/);
+  assert.match(html, /https:\/\/www\.instagram\.com\/cocoaatelierart\//);
+  assert.match(html, /\/ca\/images\/logo-320\.png/);
+  assert.match(html, /\/ca\/icons\/icon-180\.png/);
+  assert.doesNotMatch(html, /logo-reference/);
   assert.doesNotMatch(html, /The Blooming Atelier|Email this order request|Ordering not yet live/);
   assert.doesNotMatch(html, /chatgpt\.site|workspace-324323|codex-preview/i);
 });
@@ -44,6 +53,12 @@ test("includes public imagery and browser scripts in the static export", async (
     access(new URL("images/signature-bouquet-cropped.webp", out)),
     access(new URL("images/blooming-atelier-rose-blush.webp", out)),
     access(new URL("og.png", out)),
+    access(new URL("favicon.ico", out)),
+    access(new URL("icons/icon-512.png", out)),
+    access(new URL("images/logo.png", out)),
+    access(new URL("images/grazing-fruit-box.webp", out)),
+    access(new URL("images/grazing-charcuterie-box.webp", out)),
+    access(new URL("images/grazing-table-skyline.webp", out)),
     access(new URL("privacy/index.html", out)),
     access(new URL("terms/index.html", out)),
     access(new URL("thanks/index.html", out)),

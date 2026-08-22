@@ -2,11 +2,16 @@ import {
   allergenNotice,
   collectionLeadTime,
   contactEmail,
+  contactName,
+  contactPhone,
+  grazingLeadTime,
   instagramUrl,
   location,
+  logoPath,
   siteDescription,
   siteName,
   siteUrl,
+  tiktokUrl,
 } from "./site-config";
 
 const products = [
@@ -68,6 +73,33 @@ const products = [
   },
 ] as const;
 
+const grazingProducts = [
+  {
+    name: "Seasonal Fruit Grazing Box",
+    description: "Watermelon, dragon fruit, berries and melon, cut and styled fresh on the day in a kraft presentation box.",
+    category: "Grazing boxes",
+    image: "/images/grazing-fruit-box.webp",
+  },
+  {
+    name: "Charcuterie Grazing Box",
+    description: "Cured meats, soft cheeses, crackers, olives and dips arranged in a kraft presentation box for easy sharing.",
+    category: "Grazing boxes",
+    image: "/images/grazing-charcuterie-box.webp",
+  },
+  {
+    name: "The Grazing Duo",
+    description: "A seasonal fruit grazing box and a charcuterie grazing box styled to be served together.",
+    category: "Grazing boxes",
+    image: "/images/grazing-duo.webp",
+  },
+  {
+    name: "Grazing Tables & Dessert Stations",
+    description: "Long-table grazing and dessert styling built on site in Melbourne for weddings, milestones and corporate events.",
+    category: "Grazing tables and event catering",
+    image: "/images/grazing-table-wide.webp",
+  },
+] as const;
+
 const faqs = [
   {
     question: "How much notice does Cocoa Atelier need?",
@@ -88,6 +120,11 @@ const faqs = [
     question: "What should I know about allergens and storage?",
     answer:
       `${allergenNotice} Gifts should be refrigerated on arrival and enjoyed promptly; product-specific care details are supplied with the order.`,
+  },
+  {
+    question: "Does Cocoa Atelier make grazing boxes and grazing tables?",
+    answer:
+      `Yes. Seasonal fruit and charcuterie grazing boxes are made fresh on the day for Melbourne delivery or collection, and grazing tables and dessert stations are styled on site for weddings, milestones and corporate events. ${grazingLeadTime}`,
   },
   {
     question: "Does Cocoa Atelier create corporate and event orders?",
@@ -134,6 +171,30 @@ const productNodes = products.map((product, index) => {
   };
 });
 
+const grazingNodes = grazingProducts.map((product, index) => {
+  const slug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  return {
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Product",
+      "@id": `${siteUrl}/#${slug}`,
+      name: product.name,
+      description: product.description,
+      category: product.category,
+      image: absoluteUrl(product.image),
+      brand: { "@id": `${siteUrl}/#business` },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "AUD",
+        availability: "https://schema.org/PreOrder",
+        url: `${siteUrl}/#grazing`,
+        seller: { "@id": `${siteUrl}/#business` },
+      },
+    },
+  };
+});
+
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -144,9 +205,10 @@ const structuredData = {
       url: siteUrl,
       description: siteDescription,
       email: contactEmail,
-      logo: absoluteUrl("/images/logo-reference.webp"),
+      telephone: contactPhone,
+      logo: absoluteUrl(logoPath),
       image: absoluteUrl("/og.png"),
-      sameAs: [instagramUrl],
+      sameAs: [instagramUrl, tiktokUrl],
       address: {
         "@type": "PostalAddress",
         addressLocality: location.city,
@@ -168,7 +230,9 @@ const structuredData = {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer enquiries",
+        name: contactName,
         email: contactEmail,
+        telephone: contactPhone,
         areaServed: location.countryCode,
         availableLanguage: ["English"],
       },
@@ -182,6 +246,9 @@ const structuredData = {
         "Bespoke chocolate gifts",
         "Wedding dessert styling",
         "Corporate gifting",
+        "Grazing boxes",
+        "Grazing tables",
+        "Event catering styling",
       ],
     },
     {
@@ -214,6 +281,13 @@ const structuredData = {
         position: product.position,
         item: product.node,
       })),
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${siteUrl}/#grazing`,
+      name: "Cocoa Atelier grazing boxes and tables",
+      numberOfItems: grazingNodes.length,
+      itemListElement: grazingNodes,
     },
     {
       "@type": "FAQPage",

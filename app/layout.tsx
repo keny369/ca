@@ -3,10 +3,14 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { StructuredData } from "./structured-data";
 import {
+  assetPath,
+  contactEmail,
+  contactPhone,
   instagramUrl,
   siteDescription,
   siteName,
   siteUrl,
+  tiktokUrl,
 } from "./site-config";
 
 const display = Cormorant_Garamond({
@@ -24,7 +28,7 @@ const sans = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Cocoa Atelier | Chocolate Strawberry Bouquets Melbourne",
+    default: "Cocoa Atelier | Chocolate Strawberry Bouquets & Grazing Melbourne",
     template: "%s | Cocoa Atelier Melbourne",
   },
   description: siteDescription,
@@ -39,6 +43,11 @@ export const metadata: Metadata = {
     "luxury chocolate gifts Melbourne",
     "edible bouquets Melbourne",
     "chocolate covered strawberries Melbourne",
+    "grazing boxes Melbourne",
+    "grazing tables Melbourne",
+    "grazing platters Melbourne",
+    "charcuterie box Melbourne",
+    "fruit platter delivery Melbourne",
     "bespoke gifts Melbourne",
     "corporate gifting Melbourne",
     "wedding dessert styling Melbourne",
@@ -52,6 +61,16 @@ export const metadata: Metadata = {
     },
   },
   manifest: `${siteUrl}/manifest.webmanifest`,
+  icons: {
+    icon: [
+      { url: assetPath("/favicon.ico"), sizes: "48x48" },
+      { url: assetPath("/icons/icon-32.png"), sizes: "32x32", type: "image/png" },
+      { url: assetPath("/icons/icon-192.png"), sizes: "192x192", type: "image/png" },
+      { url: assetPath("/icons/icon-512.png"), sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: assetPath("/icons/icon-180.png"), sizes: "180x180", type: "image/png" }],
+    shortcut: [assetPath("/favicon.ico")],
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -99,9 +118,10 @@ export const metadata: Metadata = {
     "business:contact_data:locality": "Melbourne",
     "business:contact_data:region": "Victoria",
     "business:contact_data:country_name": "Australia",
-    "business:contact_data:email": "cocoaatelier@outlook.com",
+    "business:contact_data:email": contactEmail,
+    "business:contact_data:phone_number": contactPhone,
     "profile:first_name": "Elena",
-    "og:see_also": instagramUrl,
+    "og:see_also": [instagramUrl, tiktokUrl],
   },
 };
 

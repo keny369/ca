@@ -15,11 +15,9 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "en-AU",
     categories: ["food", "shopping", "lifestyle"],
     icons: [
-      {
-        src: assetPath("/images/logo-reference.webp"),
-        sizes: "any",
-        type: "image/webp",
-      },
+      { src: assetPath("/icons/icon-192.png"), sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: assetPath("/icons/icon-512.png"), sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: assetPath("/icons/icon-512.png"), sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
   };
 }
